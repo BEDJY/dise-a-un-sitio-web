@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON BITE | Gastronomía Sintética 2089</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Overlay de Efecto CRT/Scanlines -->
+    <div class="scanlines"></div>
+
+    <!-- Encabezado del Sistema -->
+    <header>
+        <div class="logo-container">
+            <span class="glitch" data-text="NEON_BITE">NEON_BITE</span>
+            <span class="system-status">SYS_STATUS: ONLINE</span>
+        </div>
+        <nav>
+            <a href="#menu" onclick="playBeep(600, 'square', 0.05)">MENÚ</a>
+            <a href="#synthesizer" onclick="playBeep(600, 'square', 0.05)">SINTETIZADOR</a>
+            <button class="cart-toggle" id="cartBtn" onclick="toggleCart()">
+                CRTs [<span id="cart-count">0</span>]
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">ESTABLECIMIENTO CLASE A - SECTOR 09</div>
+            <h1>ALIMENTA TU <span class="text-neon">CIBER-ALMA</span></h1>
+            <p>Nutrientes sintéticos purificados, potenciadores neuronales y gastronomía molecular de alta gama. Diseñado para implantes de última generación.</p>
+            <div class="hero-buttons">
+                <a href="#synthesizer" class="btn btn-primary" onclick="playBeep(880, 'sine', 0.1)">SINTETIZAR AHORA</a>
+                <a href="#menu" class="btn btn-secondary" onclick="playBeep(440, 'sine', 0.1)">VER MENÚ</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="holo-circle"></div>
+            <div class="holo-core"></div>
+        </div>
+    </section>
+
+    <!-- Sintetizador Interactivo -->
+    <section id="synthesizer" class="synthesizer-section">
+        <div class="section-header">
+            <h2 class="title-neon">SINTETIZADOR DE NUTRIENTES v4.2</h2>
+            <p>Configura los parámetros moleculares de tu ración diaria</p>
+        </div>
+        
+        <div class="synth-container">
+            <!-- Controles -->
+            <div class="synth-controls">
+                <div class="control-group">
+                    <label>1. BASE MOLECULAR</label>
+                    <select id="synth-base" onchange="updateSynthesizer()">
+                        <option value="ramen" data-price="120" data-energy="85" data-nanos="10" data-tox="5">Fideos de Luz (120 ฿)</option>
+                        <option value="algae" data-price="90" data-energy="60" data-nanos="25" data-tox="2">Matriz de Algas Bio (90 ฿)</option>
+                        <option value="carbon" data-price="140" data-energy="95" data-nanos="5" data-tox="12">Pasta de Carbono Negro (140 ฿)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>2. PROTEÍNA CLONADA</label>
+                    <select id="synth-protein" onchange="updateSynthesizer()">
+                        <option value="synth-beef" data-price="80" data-energy="50" data-nanos="0" data-tox="15">Clon-Vacuno Grado-A (+80 ฿)</option>
+                        <option value="neon-salmon" data-price="95" data-energy="40" data-nanos="15" data-tox="4">Salmón Bioluminiscente (+95 ฿)</option>
+                        <option value="tofu-cyber" data-price="60" data-energy="30" data-nanos="30" data-tox="0">Tofu Nanotratado (+60 ฿)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>3. INYECCIÓN DE NANOBOTS</label>
+                    <select id="synth-boost" onchange="updateSynthesizer()">
+                        <option value="focus" data-price="50" data-energy="10" data-nanos="80" data-tox="5">Enfoque Cognitivo (+50 ฿)</option>
+                        <option value="shield" data-price="65" data-energy="20" data-nanos="95" data-tox="2">Inmuno-Escudo (+65 ฿)</option>
+                        <option value="none" data-price="0" data-energy="0" data-nanos="0" data-tox="0">Ninguno (+0 ฿)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary btn-full" onclick="addSynthesizedToCart()">INYECTAR EN MEMORIA DE PEDIDO</button>
+            </div>
+
+            <!-- Previsualización Holográfica -->
+            <div class="synth-preview">
+                <div class="preview-display">
+                    <div class="holo-dish" id="holo-dish-visual"></div>
+                    <div class="holo-grid-lines"></div>
+                </div>
+                <div class="stats-panel">
+                    <h3>ESTADÍSTICAS DE COMPOSICIÓN</h3>
+                    <div class="stat-bar">
+                        <span>ENERGÍA (kcal):</span>
+                        <div class="bar-container"><div class="bar" id="bar-energy" style="width: 0%"></div></div>
+                    </div>
+                    <div class="stat-bar">
+                        <span>DENSIDAD NANOBOT:</span>
+                        <div class="bar-container"><div class="bar bar-cyan" id="bar-nanos" style="width: 0%"></div></div>
+                    </div>
+                    <div class="stat-bar">
+                        <span>TOXICIDAD SINTÉTICA:</span>
+                        <div class="bar-container"><div class="bar bar-red" id="bar-tox" style="width: 0%"></div></div>
+                    </div>
+                    <div class="price-display">
+                        VALOR DE TRANSACCIÓN: <span id="synth-total-price">0</span> ฿
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Menú -->
+    <section id="menu" class="menu-section">
+        <div class="section-header">
+            <h2 class="title-neon">CARTA DE TRANSMISIÓN DIRECTA</h2>
+            <p>Platillos icónicos listos para materialización instantánea</p>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterMenu('all')">TODOS</button>
+                <button class="filter-btn" onclick="filterMenu('solidos')">SÓLIDOS</button>
+                <button class="filter-btn" onclick="filterMenu('liquidos')">LÍQUIDOS</button>
+            </div>
+        </div>
+
+        <div class="menu-grid" id="menu-items-container">
+            <!-- Los items se renderizan dinámicamente mediante JS -->
+        </div>
+    </section>
+
+    <!-- Carrito Lateral (Holographic Drawer) -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>NÚCLEO DE PEDIDO</h3>
+            <button class="close-btn" onclick="toggleCart()">[ X ]</button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <!-- Elementos agregados -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TOTAL REQUERIDO:</span>
+                <span id="cart-total-value">0 ฿</span>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="checkout()">AUTORIZAR TRANSACCIÓN BANCARIA</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2089 NEON BITE - Todos los derechos reservados bajo la ley de corporaciones de Neo-Tokio.</p>
+        <p class="crypto-status">ENCRYPTED PROTOCOL // SHA-2089</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
